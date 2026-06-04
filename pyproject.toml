@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "videotrans-common"
+version = "0.1.0"
+description = "VideoTrans 客户端与服务端共享的常量与工具"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+
+# 基础包无第三方 Python 依赖，仅依赖 ffmpeg（外部工具）
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "twine",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+Common = ["py.typed"]
