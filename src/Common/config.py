@@ -46,7 +46,7 @@ ASR_FULL_TEXT_FILENAME = 'full_text.md'
 ASR_SENTENCE_RECONCILE_FILENAME = 'sentence-reconcile-log.md'
 # ASR 句子合并日志
 SENTENCE_MERGE_LOG_FILENAME = 'sentence-merge-log.md'
-# 二次 diarization 校准日志（cut_point_evaluator 模块输出）
+# 二次 diarization 校准日志（secondary_diarization 模块输出）
 SECONDARY_DIARIZATION_CALIBRATE_LOG_FILENAME = 'secondary-diarization-calibration-log.md'
 
 
