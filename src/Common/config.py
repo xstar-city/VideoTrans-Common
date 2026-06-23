@@ -68,9 +68,6 @@ FINAL_AUDIO_FILENAME = 'final.mp3'
 # 翻译指南文件名
 TRANSLATION_GUIDELINES_FILENAME = 'translation_guidelines.txt'
 
-# 还会存放同音频长度调整的 视频片段目录名
-VIDEO_CLIPS_DIRNAME = 'video_clips'
-
 # TTS 目标采样率（Hz），客户端 ffmpeg 提取音频和服务端混音均使用此值
 TTS_TARGET_SAMPLE_RATE = 48000
 
@@ -134,15 +131,6 @@ def build_transcript_full_text_path(segments_dir: str | Path, lang_suffix: str) 
     """
     filename = TRANSCRIPT_FULL_TEXT_FILENAME_TEMPLATE.format(lang_suffix=lang_suffix)
     return Path(segments_dir).expanduser().resolve() / filename
-
-
-def build_video_clips_dir(audio_dir: str | Path) -> Path:
-    """根据语言音频目录，返回视频片段输出目录。
-
-    例如：audio_dir = /data/video1/segments/en/
-          → /data/video1/segments/en/video_clips/
-    """
-    return Path(audio_dir).expanduser().resolve() / VIDEO_CLIPS_DIRNAME
 
 
 # ============================================================
