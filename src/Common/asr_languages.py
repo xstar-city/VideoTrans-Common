@@ -37,30 +37,3 @@ ALL_ASR_LANGUAGES_MAP = {
 }
 
 ALL_ASR_LANGUAGE_CODES = sorted(ALL_ASR_LANGUAGES_MAP.keys())
-
-# 可拓展的识别语种
-# 'ar': 'Arabic',
-# 'de': 'German',
-# 'fr': 'French',
-# 'es': 'Spanish',
-# 'pt': 'Portuguese',
-# 'id': 'Indonesian',
-# 'it': 'Italian',
-# 'ko': 'Korean',
-# 'ru': 'Russian',
-# 'th': 'Thai',
-# 'vi': 'Vietnamese',
-# 'ja': 'Japanese',
-# 'tr': 'Turkish',
-# 'hi': 'Hindi',
-# 'ms': 'Malay',
-# 'nl': 'Dutch',
-# 'sv': 'Swedish',
-# 'da': 'Danish',
-# 'fi': 'Finnish',
-# 'pl': 'Polish',
-# 'cs': 'Czech',
-# 'fa': 'Persian',
-# 'el': 'Greek',
-# 'hu': 'Hungarian',
-# 'ro': 'Romanian',
