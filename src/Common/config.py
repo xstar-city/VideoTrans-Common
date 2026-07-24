@@ -74,6 +74,27 @@ TTS_TARGET_SAMPLE_RATE = 48000
 # 支持的视频容器格式后缀
 VIDEO_CONTAINER_SUFFIXES = {'.mp4', '.mov', '.mkv', '.avi', '.webm', '.m4v'}
 
+# ── 流水线派生文件命名约定 ────────────────────────────────
+# 以下常量定义流水线各阶段产生的派生文件命名规则，
+# 用于路径构建和扫描时排除非原始视频。
+
+# 压缩上传视频的 stem 后缀（如 xxx_upload_480p.mp4）
+COMPRESSED_UPLOAD_SUFFIX = '_upload_480p'
+
+# 翻译后视频的 stem 后缀模板（如 xxx_translated_en.mp4）
+TRANSLATED_SUFFIX_TEMPLATE = '_translated_{lang_code}'
+
+# 流水线各阶段产生的派生文件 stem 标记，用于扫描时排除非原始视频。
+# 新增派生文件类型时只需在此处添加标记，所有扫描器自动生效。
+PIPELINE_DERIVED_STEM_MARKERS = (
+    '_translated_',
+    '_match_audio',
+    '_vocals',
+    '_others',
+    COMPRESSED_UPLOAD_SUFFIX,
+    '_denoised',
+)
+
 # ============================================================
 # 路径构建函数
 # ============================================================
@@ -131,6 +152,37 @@ def build_transcript_full_text_path(segments_dir: str | Path, lang_suffix: str) 
     """
     filename = TRANSCRIPT_FULL_TEXT_FILENAME_TEMPLATE.format(lang_suffix=lang_suffix)
     return Path(segments_dir).expanduser().resolve() / filename
+
+
+def build_translated_output_path(
+    input_path: Path,
+    mux_source_video: Path,
+    lang_code: str,
+) -> Path:
+    """构建翻译后视频的输出路径，并优先选择可承载视频流的后缀。
+
+    逻辑说明：
+    - 默认沿用输入文件后缀（input_path.suffix）；
+    - 若输入后缀不是视频容器（例如 .mp3），则回退为 mux_source_video 的后缀；
+    - 若回退后仍为空，则最终使用 .mp4。
+    """
+    preferred_suffix = input_path.suffix.lower()
+    if preferred_suffix not in VIDEO_CONTAINER_SUFFIXES:
+        preferred_suffix = mux_source_video.suffix or '.mp4'
+    return input_path.with_name(
+        f"{input_path.stem}{TRANSLATED_SUFFIX_TEMPLATE.format(lang_code=lang_code)}{preferred_suffix}"
+    )
+
+
+def build_compressed_upload_path(video_path: Path) -> Path:
+    """构建压缩上传视频的输出路径（如 xxx_upload_480p.mp4）。
+
+    与原视频同目录、同 stem，仅后缀变为 COMPRESSED_UPLOAD_SUFFIX + .mp4。
+    保证 build_segments_dir 一致（segments 目录基于视频所在目录）。
+    """
+    return video_path.with_name(
+        f"{video_path.stem}{COMPRESSED_UPLOAD_SUFFIX}.mp4"
+    )
 
 
 # ============================================================

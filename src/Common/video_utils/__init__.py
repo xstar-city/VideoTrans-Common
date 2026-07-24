@@ -2,12 +2,15 @@
 
 供客户端和服务端共享使用，按功能拆分为子模块：
 - probe: ffprobe 查询与 GPU 检测
-- ffmpeg_ops: 音频提取/替换、路径构建
+- ffmpeg_ops: 音频提取/替换、视频压缩
 - merge: 视频片段合并（仅供独立工具使用，主流水线不再切分/调速视频）
+
+命名常量和路径构建函数（如 build_translated_output_path、PIPELINE_DERIVED_STEM_MARKERS）
+在 Common.config 中定义，不从本模块导出。
 """
 
 from Common.video_utils.ffmpeg_ops import (
-    build_translated_output_path,
+    compress_video_for_upload,
     extract_audio_ffmpeg,
     mux_audio_into_video,
 )
@@ -34,7 +37,7 @@ __all__ = [
     "has_audio_stream",
     "has_video_stream",
     # ffmpeg_ops
-    "build_translated_output_path",
+    "compress_video_for_upload",
     "extract_audio_ffmpeg",
     "mux_audio_into_video",
     # merge
