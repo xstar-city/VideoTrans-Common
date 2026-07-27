@@ -25,23 +25,20 @@ from typing import Optional
 
 SEGMENTS_DIRNAME = 'segments'
 
-# 翻译全文转录文件名模板（如 full_text_en.txt）
-TRANSCRIPT_FULL_TEXT_FILENAME_TEMPLATE = 'full_text_{lang_suffix}.txt'
-
 # 翻译指南文件名
 TRANSLATION_GUIDELINES_FILENAME = 'translation_guidelines.txt'
 
 # ── ASR 子目录 ──────────────────────────────────────────
 # segments/ASR/ 存放语音识别结果：
 #   - 逐段识别文本：{start_s 三位小数}.txt（如 0.000.txt，与同级 mp3 片段一一对应）
-#   - 全文识别文本：full_text.md
+#   - 全文识别字幕：full_text.srt（SRT 格式，含时间戳，可编辑后返修覆盖逐段 txt）
 #   - 句子校准日志：sentence-reconcile-log.md
 #   - 句子合并日志：sentence-merge-log.md
 #   - 二次 diarization 校准日志：secondary-diarization-calibration-log.md
 
 ASR_DIRNAME = 'ASR'
-# ASR 全文输出文件名
-ASR_FULL_TEXT_FILENAME = 'full_text.md'
+# ASR 全文输出文件名（SRT 格式，含时间戳）
+ASR_FULL_TEXT_FILENAME = 'full_text.srt'
 # ASR 句子校准日志
 ASR_SENTENCE_RECONCILE_FILENAME = 'sentence-reconcile-log.md'
 # ASR 句子合并日志
@@ -59,6 +56,8 @@ SECONDARY_DIARIZATION_CALIBRATE_LOG_FILENAME = 'secondary-diarization-calibratio
 #   - 最终输出音轨：final.mp3（含背景音时为混音）
 #   - 视频片段目录：video_clips/（仅视频翻译场景）
 
+FLEXSED_EVENTS_DIRNAME = 'non_speech_vocal_events'
+
 # 合并后完整音频文件名
 COMBINED_AUDIO_FILENAME = 'combined.mp3'
 
@@ -67,6 +66,10 @@ FINAL_AUDIO_FILENAME = 'final.mp3'
 
 # 翻译指南文件名
 TRANSLATION_GUIDELINES_FILENAME = 'translation_guidelines.txt'
+
+# 编辑重跑日志文件名（JSONL 格式，记录每次返修的变更详情）
+# 存放于 segments/ 根目录，每次 edit_rerun 会话追加一行
+EDIT_RERUN_LOG_FILENAME = 'edit_rerun_log.jsonl'
 
 # TTS 目标采样率（Hz），客户端 ffmpeg 提取音频和服务端混音均使用此值
 TTS_TARGET_SAMPLE_RATE = 48000
@@ -144,16 +147,6 @@ def build_final_audio_path(segments_dir: str | Path, language_key: str) -> Path:
     return Path(segments_dir).expanduser().resolve() / language_key / FINAL_AUDIO_FILENAME
 
 
-def build_transcript_full_text_path(segments_dir: str | Path, lang_suffix: str) -> Path:
-    """根据 segments 目录和语言后缀，返回 full_text_{lang_suffix}.txt 的路径。
-
-    例如：segments_dir = /data/video1/segments/, lang_suffix = 'en'
-          → /data/video1/segments/full_text_en.txt
-    """
-    filename = TRANSCRIPT_FULL_TEXT_FILENAME_TEMPLATE.format(lang_suffix=lang_suffix)
-    return Path(segments_dir).expanduser().resolve() / filename
-
-
 def build_translated_output_path(
     input_path: Path,
     mux_source_video: Path,
@@ -195,7 +188,7 @@ def has_complete_segment_outputs(output_dir: str | Path, export_format: str = 'm
     检查逻辑：
     1. output_dir 和其下的 ASR 子目录必须存在；
     2. output_dir 中的音频文件 stem 集合与 ASR 目录中的 .txt 文件 stem 集合
-       （排除 full_text.txt）完全一致。
+       （排除 full_text.srt）完全一致。
 
     参数：
         output_dir: 分段输出目录（通常是 segments/<lang>/）
