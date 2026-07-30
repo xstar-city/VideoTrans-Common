@@ -58,6 +58,9 @@ SECONDARY_DIARIZATION_CALIBRATE_LOG_FILENAME = 'secondary-diarization-calibratio
 
 FLEXSED_EVENTS_DIRNAME = 'non_speech_vocal_events'
 
+# ASR 残差噪音目录名（vocals 中 ASR 未识别区间的背景噪音片段）
+ASR_RESIDUAL_NOISE_DIRNAME = 'asr_residual_noise'
+
 # 合并后完整音频文件名
 COMBINED_AUDIO_FILENAME = 'combined.mp3'
 
@@ -73,6 +76,19 @@ EDIT_RERUN_LOG_FILENAME = 'edit_rerun_log.jsonl'
 
 # TTS 目标采样率（Hz），客户端 ffmpeg 提取音频和服务端混音均使用此值
 TTS_TARGET_SAMPLE_RATE = 48000
+
+# ── TTS 时长感知翻译参数（客户端与服务端共享的默认值） ──────
+# 客户端 argparse 默认值和服务端运行时默认值均引用以下常量，
+# 确保两端参数一致。服务端可通过环境变量覆盖部分参数（见服务端 config.py）。
+
+# TTS 合成音频最大减速百分比（合成短于参考时，librosa 兜底拉伸最多放慢此比例）
+TTS_MAX_AUDIO_SLOWDOWN_PCT = 0.2
+# TTS 合成音频最大加速百分比（合成长于参考时，librosa 兜底拉伸最多加快此比例）
+TTS_MAX_AUDIO_SPEEDUP_PCT = 0.1
+# TTS 时长感知翻译：每个片段至少保留的合格候选音频数量
+TTS_AWARE_MIN_CANDIDATE_COUNT = 3
+# TTS 时长感知翻译：每个句子的最大时长调整重试次数（LLM 重新调整翻译的次数）
+TTS_AWARE_MAX_DURATION_RETRIES = 10
 
 # 支持的视频容器格式后缀
 VIDEO_CONTAINER_SUFFIXES = {'.mp4', '.mov', '.mkv', '.avi', '.webm', '.m4v'}
