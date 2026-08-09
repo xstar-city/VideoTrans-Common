@@ -70,6 +70,9 @@ FINAL_AUDIO_FILENAME = 'final.mp3'
 # 翻译指南文件名
 TRANSLATION_GUIDELINES_FILENAME = 'translation_guidelines.txt'
 
+# 完整翻译字幕文件名（SRT 格式，基于 ASR 时间戳和翻译文本生成，供人工检查返修）
+FULL_TRANSLATION_SRT_FILENAME = 'full_translation.srt'
+
 # 编辑重跑日志文件名（JSONL 格式，记录每次返修的变更详情）
 # 存放于 segments/ 根目录，每次 edit_rerun 会话追加一行
 EDIT_RERUN_LOG_FILENAME = 'edit_rerun_log.jsonl'
@@ -86,7 +89,7 @@ TTS_MAX_AUDIO_SLOWDOWN_PCT = 0.2
 # TTS 合成音频最大加速百分比（合成长于参考时，librosa 兜底拉伸最多加快此比例）
 TTS_MAX_AUDIO_SPEEDUP_PCT = 0.1
 # TTS 时长感知翻译：每个片段至少保留的合格候选音频数量
-TTS_AWARE_MIN_CANDIDATE_COUNT = 3
+TTS_AWARE_MIN_CANDIDATE_COUNT = 5
 # TTS 时长感知翻译：每个句子的最大时长调整重试次数（LLM 重新调整翻译的次数）
 TTS_AWARE_MAX_DURATION_RETRIES = 10
 
