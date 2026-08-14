@@ -59,6 +59,7 @@ SECONDARY_DIARIZATION_CALIBRATE_LOG_FILENAME = 'secondary-diarization-calibratio
 FLEXSED_EVENTS_DIRNAME = 'non_speech_vocal_events'
 
 # ASR 残差噪音目录名（vocals 中 ASR 未识别区间的背景噪音片段）
+# diarization 残差噪音片段也放入此目录，两类噪音互补、统一管理
 ASR_RESIDUAL_NOISE_DIRNAME = 'asr_residual_noise'
 
 # 合并后完整音频文件名
@@ -92,6 +93,19 @@ TTS_MAX_AUDIO_SPEEDUP_PCT = 0.1
 TTS_AWARE_MIN_CANDIDATE_COUNT = 5
 # TTS 时长感知翻译：每个句子的最大时长调整重试次数（LLM 重新调整翻译的次数）
 TTS_AWARE_MAX_DURATION_RETRIES = 10
+
+# ── 最终音频响度（客户端与服务端共享的默认值） ──────────────
+# final.mp3 整体响度目标（LUFS，EBU R128 / ATSC A/85 广播电视响度标准，
+# 数值越接近 0 越响）。控制视频合成后的最终音量：
+# 服务端在最终混音后把整条音频归一化到此响度。
+# -24 为广播电视标准响度；要更响可调到 -18，要更轻可调到 -30。
+FINAL_AUDIO_LUFS = -24.0
+
+# ── 客户端可见日志前缀（客户端与服务端共享的协议符号） ──────
+# 服务端流水线以此前缀开头的 stdout 行会被远程执行服务过滤后发给客户端
+# （步骤标题 / ERROR / WARN / 取消提示等），其余行仅写入本地 pipeline.log。
+# 客户端解析同样引用此常量。两端必须使用同一符号才能对得上。
+CLIENT_VISIBLE_LOG_PREFIX = '>>>'
 
 # 支持的视频容器格式后缀
 VIDEO_CONTAINER_SUFFIXES = {'.mp4', '.mov', '.mkv', '.avi', '.webm', '.m4v'}
