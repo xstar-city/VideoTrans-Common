@@ -95,7 +95,7 @@ TTS_MAX_AUDIO_SLOWDOWN_PCT = 0.2
 # （γ 硬界）控制，不再使用本参数。
 TTS_MAX_AUDIO_SPEEDUP_PCT = 0.1
 # TTS 时长感知翻译：每个片段至少保留的合格候选音频数量
-TTS_AWARE_MIN_CANDIDATE_COUNT = 5
+TTS_AWARE_MIN_CANDIDATE_COUNT = 3
 # TTS 时长感知翻译：每个句子的最大时长调整重试次数（LLM 重新调整翻译的次数）
 TTS_AWARE_MAX_DURATION_RETRIES = 10
 
