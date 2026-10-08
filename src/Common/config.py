@@ -78,9 +78,6 @@ FULL_TRANSLATION_SRT_FILENAME = 'full_translation.srt'
 # 存放于 segments/ 根目录，每次 edit_rerun 会话追加一行
 EDIT_RERUN_LOG_FILENAME = 'edit_rerun_log.jsonl'
 
-# TTS 目标采样率（Hz），客户端 ffmpeg 提取音频和服务端混音均使用此值
-TTS_TARGET_SAMPLE_RATE = 48000
-
 # ── TTS 时长感知翻译参数（客户端与服务端共享的默认值） ──────
 # 客户端 argparse 默认值和服务端运行时默认值均引用以下常量，
 # 确保两端参数一致。以下常量是本组参数的**唯一来源**：代码 / 测试 /
