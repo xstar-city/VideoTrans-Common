@@ -83,13 +83,11 @@ EDIT_RERUN_LOG_FILENAME = 'edit_rerun_log.jsonl'
 # 确保两端参数一致。以下常量是本组参数的**唯一来源**：代码 / 测试 /
 # 文档 / 规则一律引用常量名，禁止抄写数值（抄写必随调参漂移）。
 
-# TTS 语速偏好（ρ_listen 判定窗中心，1.0 = 与原声等速，<1 偏慢、>1 偏快）。
+# TTS 语速偏好（文本闸判定窗中心，1.0 = 与原声等速，<1 偏慢、>1 偏快）。
 # 窗宽（容忍带 SLOW/FAST）是服务端内部参数（服务端/config.py 的
 # TTS_MAX_AUDIO_SLOWDOWN_PCT / TTS_MAX_AUDIO_SPEEDUP_PCT），
 # 客户端只暴露本偏好参数（--tts-speech-rate-preference）。
 TTS_SPEECH_RATE_PREFERENCE_DEFAULT = 1.0
-# TTS 时长感知翻译：每个片段至少保留的合格候选音频数量
-TTS_AWARE_MIN_CANDIDATE_COUNT = 3
 # TTS 时长感知翻译：每个句子的最大时长调整重试次数（LLM 重新调整翻译的次数）
 TTS_AWARE_MAX_DURATION_RETRIES = 10
 
