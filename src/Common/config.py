@@ -90,6 +90,9 @@ EDIT_RERUN_LOG_FILENAME = 'edit_rerun_log.jsonl'
 TTS_SPEECH_RATE_PREFERENCE_DEFAULT = 1.0
 # TTS 时长感知翻译：每个句子的最大时长调整重试次数（LLM 重新调整翻译的次数）
 TTS_AWARE_MAX_DURATION_RETRIES = 10
+# TTS 时长感知翻译：收集阶段凑满目标——哑火/质量筛选存活的候选条数（供阶段 3 ASR 选优）。
+# 客户端 CLI --tts-aware-min-candidate-count 可调（1-10）。
+TTS_AWARE_MIN_CANDIDATE_COUNT = 3
 
 # ── 最终音频响度（客户端与服务端共享的默认值） ──────────────
 # final.mp3 整体响度目标（LUFS，EBU R128 / ATSC A/85 广播电视响度标准，
